@@ -19,3 +19,7 @@ if [ -f /usr/share/git/completion/git-completion.bash ]; then
 fi
 
 PS1='[\u@\h \W\[\033[33m\]$(__git_ps1 " (%s)")\[\033[00m\]]\$ '
+
+# nodejs global packages
+PATH="$HOME/.node_modules/bin:$PATH"
+export npm_config_prefix=~/.node_module
