@@ -185,6 +185,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+exec --no-startup-id feh --bag-scale ~/.config/i3/wallpapers/bliss.jpg
 exec --no-startup-id nm-applet
 
 # Start i3bar to display a workspace bar (plus the system information i3status
