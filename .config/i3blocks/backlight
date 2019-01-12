@@ -1,0 +1,2 @@
+#!/bin/bash
+echo `xbacklight | sed 's/\([0-9]\)\..*/\1/'`%
