@@ -1,0 +1,7 @@
+#!/bin/bash
+LAYOUT=`setxkbmap -query | grep layout | awk '{print $2}'`
+
+case $LAYOUT in
+  "ara") setxkbmap -layout gb;;
+  "gb") setxkbmap -layout ara -variant buckwalter ;;
+esac

@@ -41,6 +41,12 @@ instance=Master
 interval=once
 signal=10
 
+[layout]
+label=
+command=~/.config/i3blocks/layout
+interval=once
+signal=11
+
 # Memory usage
 #
 # The type defaults to "mem" if the instance is not specified.
