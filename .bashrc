@@ -22,7 +22,10 @@ fi
 PS1='[\u@\h \W\[\033[33m\]$(__git_ps1 " (%s)")\[\033[00m\]]\$ '
 
 # nodejs global packages
-PATH="$HOME/.node_modules/bin:$PATH"
+PATH="$PATH:$HOME/.node_modules/bin"
 export npm_config_prefix=~/.node_module
+
+
+PATH="$PATH:$HOME/.local/bin"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
