@@ -23,7 +23,7 @@ PS1='[\u@\h \W\[\033[33m\]$(__git_ps1 " (%s)")\[\033[00m\]]\$ '
 
 # nodejs global packages
 PATH="$PATH:$HOME/.node_modules/bin"
-export npm_config_prefix=~/.node_module
+export npm_config_prefix=~/.node_modules
 
 
 PATH="$PATH:$HOME/.local/bin"
