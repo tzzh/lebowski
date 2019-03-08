@@ -12,7 +12,7 @@ Plug 'mxw/vim-jsx'
 call plug#end()
 
 set guicursor=
-" colorscheme gruvbox 
+colorscheme gruvbox 
 set background=dark
 set number
 
