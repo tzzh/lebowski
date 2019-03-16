@@ -5,7 +5,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export TERMINAL="st -e tmux"
+export TERMINAL="alacritty"
 export EDITOR="nvim"
 
 alias ls='ls --color=auto'
