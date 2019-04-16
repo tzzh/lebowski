@@ -18,6 +18,7 @@ unblock() {
 case "$1" in
     -u) unblock
     ;;
-    *) block >> $HOST_FILE
+    *) unblock
+       block >> $HOST_FILE
     ;;
 esac
