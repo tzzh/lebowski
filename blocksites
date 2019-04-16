@@ -1,0 +1,23 @@
+#!/usr/bin/bash
+BLOCKSITES_HEADER="####BLOCKSITES####"
+HOST_FILE=/etc/hosts
+BLACKLIST_FILE=/home/thomas/.config/blocksites/blacklist
+
+block() {
+    echo $BLOCKSITES_HEADER
+    for line in `cat $BLACKLIST_FILE`; do
+        echo "0.0.0.0 $line"
+        echo "0.0.0.0 www.$line"
+    done
+}
+
+unblock() {
+    sed -i '/'"$BLOCKSITES_HEADER"'/,$d' $HOST_FILE
+}
+
+case "$1" in
+    -u) unblock
+    ;;
+    *) block >> $HOST_FILE
+    ;;
+esac
