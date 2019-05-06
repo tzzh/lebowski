@@ -8,8 +8,19 @@
 export TERMINAL="alacritty"
 export EDITOR="nvim"
 
-alias ls='ls --color=auto'
+alias ls="ls -hN --color=auto --group-directories-first" 
+alias grep="grep --color=auto"
 alias nv='nvim'
+
+# less/man colors
+export LESS=-R
+export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"; a="${a%_}"
+export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"; a="${a%_}"
+export LESS_TERMCAP_me="$(printf '%b' '[0m')"; a="${a%_}"
+export LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"; a="${a%_}"
+export LESS_TERMCAP_se="$(printf '%b' '[0m')"; a="${a%_}"
+export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"; a="${a%_}"
+export LESS_TERMCAP_ue="$(printf '%b' '[0m')"; a="${a%_}"
 
 # Git completion and prompt
 if [ -f /usr/share/git/completion/git-prompt.sh ]; then
