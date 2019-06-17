@@ -30,7 +30,7 @@ if [ -f /usr/share/git/completion/git-completion.bash ]; then
 	source /usr/share/git/completion/git-completion.bash
 fi
 
-PS1='[\u@\h \W\[\033[33m\]$(__git_ps1 " (%s)")\[\033[00m\]]\$ '
+PS1='[\u@\h \w\[\033[33m\]$(__git_ps1 " (%s)")\[\033[00m\]]\$ '
 
 # nodejs global packages
 PATH="$PATH:$HOME/.node_modules/bin"
