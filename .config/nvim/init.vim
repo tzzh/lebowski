@@ -3,14 +3,25 @@ Plug 'w0rp/ale'
 Plug 'vim-airline/vim-airline'
 Plug 'flazz/vim-colorschemes'
 Plug 'Shougo/deoplete.nvim'
-Plug 'zchee/deoplete-jedi'
+Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'majutsushi/tagbar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'tomlion/vim-solidity'
+Plug 'vim-python/python-syntax'
+
+"Plug 'Vigemus/iron.nvim'
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
+Plug 'guns/vim-sexp', { 'for': 'clojure' }
+"Plug 'clojure-vim/acid.nvim'
+
+Plug 'luochen1990/rainbow', { 'for': 'clojure' }
+
 call plug#end()
+
+"luafile $HOME/.config/nvim/plugins.lua
 
 set guicursor=
 colorscheme gruvbox 
@@ -54,6 +65,9 @@ let g:ale_python_mypy_options = '--ignore-missing-imports'
 let g:ale_python_flake8_executable = 'python3'   " or 'python' for Python 2
 let g:ale_python_flake8_options = '-m flake8 --max-line-length 300'
 
+
+let g:ale_fixers.clojure = ['remove_trailing_lines', 'trim_whitespace']
+
 nnoremap <Leader>f :ALEFix<CR>
 nnoremap <Leader>l :lopen<CR>
 nnoremap <Leader>c :lclose<CR>
@@ -67,9 +81,33 @@ nnoremap <C-P> :FZF<CR>
 nnoremap <C-B> :Buffers<CR>
 
 " Grep
-nnoremap <Leader>r :Rg <C-R><C-W><CR>
+nnoremap <Leader>g :Rg <C-R><C-W><CR>
 
 " enable jsx syntax in js files (not only jsx)
 let g:jsx_ext_required = 0
 
+" Rainbow Parenthesis (for clojure)
+let g:rainbow_active = 1
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+
 tnoremap <Esc> <C-\><C-n>
+
+
+au BufNewFile,BufRead Jenkinsfile setf groovy

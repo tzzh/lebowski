@@ -1,42 +1,42 @@
-#
-# ~/.bashrc
-#
+# System-wide .bashrc file for interactive bash(1) shells.
+if [ -z "$PS1" ]; then
+   return
+fi
 
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
+export HISTSIZE=10000
+export EDITOR=nvim
 
-export TERMINAL="alacritty"
-export EDITOR="nvim"
-
-alias ls="ls -hN --color=auto --group-directories-first" 
-alias grep="grep --color=auto"
+alias ls='ls -G'
 alias nv='nvim'
+alias terraform11=/usr/local/opt/terraform@0.11/bin/terraform
 
-# less/man colors
-export LESS=-R
-export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"; a="${a%_}"
-export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"; a="${a%_}"
-export LESS_TERMCAP_me="$(printf '%b' '[0m')"; a="${a%_}"
-export LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"; a="${a%_}"
-export LESS_TERMCAP_se="$(printf '%b' '[0m')"; a="${a%_}"
-export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"; a="${a%_}"
-export LESS_TERMCAP_ue="$(printf '%b' '[0m')"; a="${a%_}"
+# Make bash check its window size after a process completes
+shopt -s checkwinsize
 
-# Git completion and prompt
-if [ -f /usr/share/git/completion/git-prompt.sh ]; then
-	source /usr/share/git/completion/git-prompt.sh 
-fi
-if [ -f /usr/share/git/completion/git-completion.bash ]; then
-	source /usr/share/git/completion/git-completion.bash
-fi
+[ -r "/etc/bashrc_$TERM_PROGRAM" ] && . "/etc/bashrc_$TERM_PROGRAM"
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
-PS1='[\u@\h \w\[\033[33m\]$(__git_ps1 " (%s)")\[\033[00m\]]\$ '
+function aws_profile() {
+    case "$AWS_PROFILE" in
+        "") echo ""
+            ;;
+        *) echo "<$AWS_PROFILE>"
+            ;;
+    esac
+}
 
-# nodejs global packages
-PATH="$PATH:$HOME/.node_modules/bin"
-export npm_config_prefix=~/.node_modules
+PS1='[\u@\h \w\[\033[33m\]$(__git_ps1)\[\033[00m\] \[$(tput setaf 2)\]$(aws_profile)\[$(tput sgr0)\]]\$ '
 
-
-PATH="$PATH:$HOME/.local/bin"
+source ~/.aws/set_aws_env_trainlinerc
+#set-aws-env staging > /dev/null
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
+export BASTION_USERNAME=tormezzano
+export CORP_USER=tormezzano
+export BASTION_KEY_PATH=~/.ssh/ttl-bastion-decrypted
+export BASTION_KEY=~/.ssh/ttl-bastion
+export FZF_DEFAULT_COMMAND='fd --type f'
