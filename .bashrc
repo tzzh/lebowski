@@ -5,7 +5,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export TERMINAL="alacritty"
+export TERMINAL="st"
 export EDITOR="nvim"
 
 alias ls="ls -hN --color=auto --group-directories-first" 
