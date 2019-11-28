@@ -8,7 +8,6 @@ export EDITOR=nvim
 
 alias ls='ls -G'
 alias nv='nvim'
-alias terraform11=/usr/local/opt/terraform@0.11/bin/terraform
 
 # Make bash check its window size after a process completes
 shopt -s checkwinsize
