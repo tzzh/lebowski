@@ -11,10 +11,13 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'vim-python/python-syntax'
 
+
+"Plug 'Olical/conjure', { 'do': 'bin/compile' }
 "Plug 'Vigemus/iron.nvim'
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+"Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
 Plug 'guns/vim-sexp', { 'for': 'clojure' }
+Plug 'liquidz/vim-iced', {'for': 'clojure'}
 "Plug 'clojure-vim/acid.nvim'
 
 Plug 'luochen1990/rainbow', { 'for': 'clojure' }
@@ -58,6 +61,7 @@ let g:deoplete#enable_at_startup = 1
 
 nnoremap <C-N> :nohl<CR>
 
+let g:ale_linters = {'clojure': ['clj-kondo', 'joker']}
 let g:ale_fixers = {}
 let g:ale_fixers.python = ['autopep8']
 let g:ale_python_autopep8_options = '--max-line-length 300'
@@ -111,3 +115,6 @@ tnoremap <Esc> <C-\><C-n>
 
 
 au BufNewFile,BufRead Jenkinsfile setf groovy
+
+
+let g:iced_enable_default_key_mappings = v:true
