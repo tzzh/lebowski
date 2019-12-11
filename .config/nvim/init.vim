@@ -2,29 +2,35 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'w0rp/ale'
 Plug 'vim-airline/vim-airline'
 Plug 'flazz/vim-colorschemes'
-Plug 'Shougo/deoplete.nvim'
-Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+"Plug 'Shougo/deoplete.nvim'
+"Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'majutsushi/tagbar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+
+" Plug 'Vigemus/iron.nvim'
 Plug 'vim-python/python-syntax'
 
-
-"Plug 'Olical/conjure', { 'do': 'bin/compile' }
-"Plug 'Vigemus/iron.nvim'
-"Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+Plug 'tpope/vim-fireplace'
 Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
 Plug 'guns/vim-sexp', { 'for': 'clojure' }
-Plug 'liquidz/vim-iced', {'for': 'clojure'}
-"Plug 'clojure-vim/acid.nvim'
+" Plug 'liquidz/vim-iced', {'for': 'clojure'}
+" Plug 'liquidz/vim-iced-coc-source', {'for': 'clojure'}
 
 Plug 'luochen1990/rainbow', { 'for': 'clojure' }
 
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
 call plug#end()
 
-"luafile $HOME/.config/nvim/plugins.lua
+" luafile $HOME/.config/nvim/plugins.lua
 
 set guicursor=
 colorscheme gruvbox 
@@ -72,6 +78,9 @@ let g:ale_python_flake8_options = '-m flake8 --max-line-length 300'
 
 let g:ale_fixers.clojure = ['remove_trailing_lines', 'trim_whitespace']
 
+let g:ale_linters.go = ['gofmt', 'gobuild', 'golint']
+let g:ale_fixers.go = ['gofmt']
+
 nnoremap <Leader>f :ALEFix<CR>
 nnoremap <Leader>l :lopen<CR>
 nnoremap <Leader>c :lclose<CR>
@@ -117,4 +126,4 @@ tnoremap <Esc> <C-\><C-n>
 au BufNewFile,BufRead Jenkinsfile setf groovy
 
 
-let g:iced_enable_default_key_mappings = v:true
+"let g:iced_enable_default_key_mappings = v:true

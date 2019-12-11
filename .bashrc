@@ -31,7 +31,7 @@ source ~/.aws/set_aws_env_trainlinerc
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-export PATH="$HOME/.local/share/nvim/plugged/vim-iced/bin/:$HOME/.jenv/bin:$PATH"
+export PATH="$HOME/go/bin/:$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
 
 export BASTION_USERNAME=tormezzano
