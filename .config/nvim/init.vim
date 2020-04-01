@@ -4,9 +4,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'flazz/vim-colorschemes'
 
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-"Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'majutsushi/tagbar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -20,7 +20,7 @@ Plug 'vim-python/python-syntax'
 
 Plug 'tpope/vim-fireplace'
 Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
-Plug 'guns/vim-sexp', { 'for': 'clojure' }
+Plug 'guns/vim-sexp' ", { 'for': 'clojure' }
 " Plug 'liquidz/vim-iced', {'for': 'clojure'}
 " Plug 'liquidz/vim-iced-coc-source', {'for': 'clojure'}
 
@@ -61,6 +61,12 @@ set splitright
 com! FormatJSON %!python -m json.tool
 
 let g:deoplete#enable_at_startup = 1
+
+"call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
+"let g:deoplete#max_list = 10
+"call deoplete#custom#option({'max_list': 5})
+"call deoplete#custom#option({'omni_patterns': {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'}})
+"call deoplete#custom#option('max_list', 5)
 "#let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
 "#
 "#let g:python3_host_prog = '/usr/bin/python3'
@@ -124,6 +130,3 @@ tnoremap <Esc> <C-\><C-n>
 
 
 au BufNewFile,BufRead Jenkinsfile setf groovy
-
-
-"let g:iced_enable_default_key_mappings = v:true
