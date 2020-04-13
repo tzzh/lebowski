@@ -5,12 +5,13 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export TERMINAL="st"
+export TERMINAL="alacritty"
 export EDITOR="nvim"
 
 alias ls="ls -hN --color=auto --group-directories-first" 
 alias grep="grep --color=auto"
 alias nv='nvim'
+alias youtube="google-chrome-stable --incognito youtube.com"
 
 # less/man colors
 export LESS=-R
@@ -37,6 +38,6 @@ PATH="$PATH:$HOME/.node_modules/bin"
 export npm_config_prefix=~/.node_modules
 
 
-PATH="$PATH:$HOME/.local/bin"
+PATH="$PATH:$HOME/.local/bin:$HOME/scripts"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
