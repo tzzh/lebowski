@@ -60,3 +60,6 @@ export CORP_USER=tormezzano
 export BASTION_KEY_PATH=~/.ssh/ttl-bastion-decrypted
 export BASTION_KEY=~/.ssh/ttl-bastion
 export FZF_DEFAULT_COMMAND='fd --type f'
+
+export HISTFILESIZE=1000000
+export HISTSIZE=1000000

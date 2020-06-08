@@ -3,10 +3,11 @@ Plug 'w0rp/ale'
 Plug 'vim-airline/vim-airline'
 Plug 'flazz/vim-colorschemes'
 
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'majutsushi/tagbar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -16,9 +17,10 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 
 " Plug 'Vigemus/iron.nvim'
-Plug 'vim-python/python-syntax'
+"Plug 'vim-python/python-syntax'
 
-Plug 'tpope/vim-fireplace'
+" Plug 'tpope/vim-fireplace'
+Plug 'Olical/conjure', {'branch': 'develop'}
 Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
 Plug 'guns/vim-sexp' ", { 'for': 'clojure' }
 " Plug 'liquidz/vim-iced', {'for': 'clojure'}
@@ -26,7 +28,12 @@ Plug 'guns/vim-sexp' ", { 'for': 'clojure' }
 
 Plug 'luochen1990/rainbow', { 'for': 'clojure' }
 
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'bakpakin/fennel.vim'
+
+Plug 'elixir-editors/vim-elixir'
+
+Plug 'reasonml-editor/vim-reason-plus'
 
 call plug#end()
 
@@ -73,6 +80,8 @@ let g:deoplete#enable_at_startup = 1
 
 nnoremap <C-N> :nohl<CR>
 
+
+"let g:ale_open_list = 1
 let g:ale_linters = {'clojure': ['clj-kondo', 'joker']}
 let g:ale_fixers = {}
 let g:ale_fixers.python = ['autopep8']
@@ -81,8 +90,9 @@ let g:ale_python_mypy_options = '--ignore-missing-imports'
 let g:ale_python_flake8_executable = 'python3'   " or 'python' for Python 2
 let g:ale_python_flake8_options = '-m flake8 --max-line-length 300'
 
-
 let g:ale_fixers.clojure = ['remove_trailing_lines', 'trim_whitespace']
+
+let g:ale_fixers.javascript = ['eslint', 'remove_trailing_lines', 'trim_whitespace']
 
 let g:ale_linters.go = ['gofmt', 'gobuild', 'golint']
 let g:ale_fixers.go = ['gofmt']
@@ -127,6 +137,18 @@ let g:rbpt_colorpairs = [
     \ ]
 
 tnoremap <Esc> <C-\><C-n>
+
+" COC
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+" Mappings using CoCList:
+" Show all diagnostics.
+nnoremap <silent> <Leader>d  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+let g:coc_global_extensions = ['coc-conjure']
 
 
 au BufNewFile,BufRead Jenkinsfile setf groovy
