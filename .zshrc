@@ -32,4 +32,7 @@ export BASTION_KEY_PATH=~/.ssh/ttl-bastion-decrypted
 export BASTION_KEY=~/.ssh/ttl-bastion
 export EDITOR=nvim
 source ~/Projects/turing-scripts/set-aws-env.sh
-export PATH="/usr/local/sbin:$PATH"
+export GOPATH=$HOME/go
+export GOBIN=$GOPATH/bin
+export PATH="/usr/local/sbin:$PATH:$GOBIN"
+source ~/.secretsrc

@@ -1,39 +1,33 @@
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
 Plug 'vim-airline/vim-airline'
 Plug 'flazz/vim-colorschemes'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
 
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-Plug 'majutsushi/tagbar'
+"Plug 'majutsushi/tagbar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 
-" Plug 'Vigemus/iron.nvim'
-"Plug 'vim-python/python-syntax'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 
-" Plug 'tpope/vim-fireplace'
-Plug 'Olical/conjure', {'branch': 'develop'}
+Plug 'Olical/conjure', {'tag': 'v4.5.0'}
 Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
 Plug 'guns/vim-sexp' ", { 'for': 'clojure' }
-" Plug 'liquidz/vim-iced', {'for': 'clojure'}
-" Plug 'liquidz/vim-iced-coc-source', {'for': 'clojure'}
 
 Plug 'luochen1990/rainbow', { 'for': 'clojure' }
 
 "Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'bakpakin/fennel.vim'
 
-Plug 'elixir-editors/vim-elixir'
-
-Plug 'reasonml-editor/vim-reason-plus'
 
 call plug#end()
 
@@ -64,9 +58,6 @@ nnoremap <C-L> :tabnext<CR>
 set splitbelow
 set splitright
 
-"Format JSON in a readable way
-com! FormatJSON %!python -m json.tool
-
 let g:deoplete#enable_at_startup = 1
 
 "call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
@@ -82,24 +73,24 @@ nnoremap <C-N> :nohl<CR>
 
 
 "let g:ale_open_list = 1
-let g:ale_linters = {'clojure': ['clj-kondo', 'joker']}
-let g:ale_fixers = {}
-let g:ale_fixers.python = ['autopep8']
-let g:ale_python_autopep8_options = '--max-line-length 300'
-let g:ale_python_mypy_options = '--ignore-missing-imports'
-let g:ale_python_flake8_executable = 'python3'   " or 'python' for Python 2
-let g:ale_python_flake8_options = '-m flake8 --max-line-length 300'
-
-let g:ale_fixers.clojure = ['remove_trailing_lines', 'trim_whitespace']
-
-let g:ale_fixers.javascript = ['eslint', 'remove_trailing_lines', 'trim_whitespace']
-
-let g:ale_linters.go = ['gofmt', 'gobuild', 'golint']
-let g:ale_fixers.go = ['gofmt']
-
-nnoremap <Leader>f :ALEFix<CR>
-nnoremap <Leader>l :lopen<CR>
-nnoremap <Leader>c :lclose<CR>
+"let g:ale_linters = {'clojure': ['clj-kondo', 'joker']}
+"let g:ale_fixers = {}
+"let g:ale_fixers.python = ['autopep8']
+"let g:ale_python_autopep8_options = '--max-line-length 300'
+"let g:ale_python_mypy_options = '--ignore-missing-imports'
+"let g:ale_python_flake8_executable = 'python3'   " or 'python' for Python 2
+"let g:ale_python_flake8_options = '-m flake8 --max-line-length 300'
+"
+"let g:ale_fixers.clojure = ['remove_trailing_lines', 'trim_whitespace']
+"
+"let g:ale_fixers.javascript = ['eslint', 'remove_trailing_lines', 'trim_whitespace']
+"
+"let g:ale_linters.go = ['gofmt', 'gobuild', 'golint']
+"let g:ale_fixers.go = ['gofmt']
+"
+"" nnoremap <Leader>f :ALEFix<CR>
+"nnoremap <Leader>l :lopen<CR>
+"nnoremap <Leader>c :lclose<CR>
 
 " enable max python highlighting
 let g:python_highlight_all = 1
@@ -141,14 +132,42 @@ tnoremap <Esc> <C-\><C-n>
 " COC
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gr <Plug>(coc-references)
+            
+" format current buffer.
+nnoremap <Leader>f :call CocAction('format')<CR>
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
+
+"Show doc
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocActionAsync('doHover')
+  endif
+endfunction
 nnoremap <silent> K :call <SID>show_documentation()<CR>
-" Mappings using CoCList:
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
 " Show all diagnostics.
 nnoremap <silent> <Leader>d  :<C-u>CocList diagnostics<cr>
 nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-let g:coc_global_extensions = ['coc-conjure']
+let g:coc_global_extensions = ['coc-conjure',
+                              \'coc-go', 
+                              \'coc-python',
+                              \'coc-css',
+                              \'coc-json',
+                              \]
+
+
 
 
 au BufNewFile,BufRead Jenkinsfile setf groovy
