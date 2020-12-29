@@ -13,11 +13,11 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
+"Plug 'pangloss/vim-javascript'
+"Plug 'mxw/vim-jsx'
+"
+"Plug 'leafgarland/typescript-vim'
+"Plug 'peitalin/vim-jsx-typescript'
 
 Plug 'Olical/conjure', {'tag': 'v4.5.0'}
 Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
@@ -28,6 +28,8 @@ Plug 'luochen1990/rainbow', { 'for': 'clojure' }
 "Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'bakpakin/fennel.vim'
 
+Plug 'LnL7/vim-nix'
+Plug 'kassio/neoterm'
 
 call plug#end()
 
@@ -129,6 +131,13 @@ let g:rbpt_colorpairs = [
 
 tnoremap <Esc> <C-\><C-n>
 
+" neoterm
+let g:neoterm_default_mod='belowright' " open terminal in bottom split
+let g:neoterm_size=12 " terminal split size
+let g:neoterm_autoscroll=1 " scroll to the bottom when running a command
+nnoremap <leader>el :TREPLSendLine<cr>j " send current line and move down
+vnoremap <leader>es :TREPLSendSelection<cr> " send current selection
+
 " COC
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gr <Plug>(coc-references)
@@ -166,8 +175,6 @@ let g:coc_global_extensions = ['coc-conjure',
                               \'coc-css',
                               \'coc-json',
                               \]
-
-
 
 
 au BufNewFile,BufRead Jenkinsfile setf groovy
