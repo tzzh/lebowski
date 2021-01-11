@@ -1,23 +1,11 @@
 call plug#begin('~/.local/share/nvim/plugged')
-"Plug 'w0rp/ale'
 Plug 'vim-airline/vim-airline'
 Plug 'flazz/vim-colorschemes'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-"Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
-
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-"Plug 'majutsushi/tagbar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-
-"Plug 'pangloss/vim-javascript'
-"Plug 'mxw/vim-jsx'
-"
-"Plug 'leafgarland/typescript-vim'
-"Plug 'peitalin/vim-jsx-typescript'
 
 Plug 'Olical/conjure', {'tag': 'v4.5.0'}
 Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
@@ -25,15 +13,12 @@ Plug 'guns/vim-sexp' ", { 'for': 'clojure' }
 
 Plug 'luochen1990/rainbow', { 'for': 'clojure' }
 
-"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'bakpakin/fennel.vim'
 
 Plug 'LnL7/vim-nix'
 Plug 'kassio/neoterm'
 
 call plug#end()
-
-" luafile $HOME/.config/nvim/plugins.lua
 
 set guicursor=
 colorscheme gruvbox 
@@ -60,39 +45,7 @@ nnoremap <C-L> :tabnext<CR>
 set splitbelow
 set splitright
 
-let g:deoplete#enable_at_startup = 1
-
-"call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
-"let g:deoplete#max_list = 10
-"call deoplete#custom#option({'max_list': 5})
-"call deoplete#custom#option({'omni_patterns': {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'}})
-"call deoplete#custom#option('max_list', 5)
-"#let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
-"#
-"#let g:python3_host_prog = '/usr/bin/python3'
-
 nnoremap <C-N> :nohl<CR>
-
-
-"let g:ale_open_list = 1
-"let g:ale_linters = {'clojure': ['clj-kondo', 'joker']}
-"let g:ale_fixers = {}
-"let g:ale_fixers.python = ['autopep8']
-"let g:ale_python_autopep8_options = '--max-line-length 300'
-"let g:ale_python_mypy_options = '--ignore-missing-imports'
-"let g:ale_python_flake8_executable = 'python3'   " or 'python' for Python 2
-"let g:ale_python_flake8_options = '-m flake8 --max-line-length 300'
-"
-"let g:ale_fixers.clojure = ['remove_trailing_lines', 'trim_whitespace']
-"
-"let g:ale_fixers.javascript = ['eslint', 'remove_trailing_lines', 'trim_whitespace']
-"
-"let g:ale_linters.go = ['gofmt', 'gobuild', 'golint']
-"let g:ale_fixers.go = ['gofmt']
-"
-"" nnoremap <Leader>f :ALEFix<CR>
-"nnoremap <Leader>l :lopen<CR>
-"nnoremap <Leader>c :lclose<CR>
 
 " enable max python highlighting
 let g:python_highlight_all = 1
