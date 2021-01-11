@@ -136,7 +136,9 @@ let g:neoterm_default_mod='belowright' " open terminal in bottom split
 let g:neoterm_size=12 " terminal split size
 let g:neoterm_autoscroll=1 " scroll to the bottom when running a command
 nnoremap <leader>el :TREPLSendLine<cr>j " send current line and move down
-vnoremap <leader>es :TREPLSendSelection<cr> " send current selection
+vnoremap <leader>es :TREPLSendSelection<cr> " send current line and move down
+nnoremap <leader>ef :TREPLSendFile<cr> " send current line and move down
+nnoremap <leader>t :Tnew<cr> " new term
 
 " COC
 nmap <silent> gd <Plug>(coc-definition)
