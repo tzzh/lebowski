@@ -11,7 +11,6 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
-source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 setopt share_history
 
 
@@ -31,8 +30,14 @@ export CORP_USER=tormezzano
 export BASTION_KEY_PATH=~/.ssh/ttl-bastion-decrypted
 export BASTION_KEY=~/.ssh/ttl-bastion
 export EDITOR=nvim
-source ~/Projects/turing-scripts/set-aws-env.sh
+source  /usr/local/opt/turing-scripts/set-aws-env.sh
+#source ~/Projects/turing-scripts/set-aws-env.sh
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export PATH="/usr/local/sbin:$PATH:$GOBIN"
 source ~/.secretsrc
+export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+
+alias love="/Applications/love.app/Contents/MacOS/love"
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"

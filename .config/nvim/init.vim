@@ -18,6 +18,15 @@ Plug 'bakpakin/fennel.vim'
 Plug 'LnL7/vim-nix'
 Plug 'kassio/neoterm'
 
+Plug 'tpope/vim-surround'
+Plug 'airblade/vim-gitgutter'
+
+Plug 'pangloss/vim-javascript'
+Plug 'maxmellon/vim-jsx-pretty'
+
+Plug 'leafgarland/typescript-vim'
+Plug 'pantharshit00/vim-prisma'
+
 call plug#end()
 
 set guicursor=
