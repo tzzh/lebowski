@@ -9,3 +9,5 @@
 if [ "$(tty)" = "/dev/tty1" ]; then
 	pgrep -x i3 || exec startx
 fi
+
+export PATH="$HOME/.poetry/bin:$PATH"
