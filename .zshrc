@@ -32,4 +32,15 @@ export EDITOR="nvim"
 alias nv=nvim
 alias ls=exa
 
-export PATH="$HOME/.poetry/bin:$PATH"
+export PATH="$HOME/.poetry/bin:$HOME/.local/bin:$PATH"
+export FZF_DEFAULT_COMMAND="rg --files"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+precmd() {
+    [[ -f /tmp/whereami ]] && cd $(cat /tmp/whereami)
+}
+
+chpwd() {
+    pwd > /tmp/whereami
+}
