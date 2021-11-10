@@ -18,6 +18,7 @@ opt.background="dark"
 opt.shiftwidth=4
 opt.tabstop=4
 opt.expandtab=true
+opt.cursorline=true
 
 cmd('colorscheme gruvbox')
 cmd('filetype plugin indent on')
