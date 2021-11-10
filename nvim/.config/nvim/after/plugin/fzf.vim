@@ -15,4 +15,5 @@ let g:fzf_action = {
 let g:fzf_buffers_jump = 1
 nnoremap <Leader>p :Files<CR>
 nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>m :Maps<CR>
 nnoremap <Leader>ev :FZF ~/.config/nvim/<CR>
