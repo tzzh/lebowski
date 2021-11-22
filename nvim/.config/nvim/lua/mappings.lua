@@ -29,4 +29,6 @@ end
 
 M.toggle_qf = toggle_qf
 map("n", "<leader>qf", [[:lua require('mappings').toggle_qf()<CR>]], { noremap = true })
+
+map("n", "<leader>mp", [[:lua require('mypy').run()<CR>]], {noremap = true, silent = true})
 return M
