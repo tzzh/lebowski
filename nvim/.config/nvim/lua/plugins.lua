@@ -24,7 +24,6 @@ return require("packer").startup(function(use)
 	use("lewis6991/gitsigns.nvim")
 	use("vim-test/vim-test")
 	use("junegunn/vim-peekaboo")
-	use("vimwiki/vimwiki")
 	use("kassio/neoterm")
 
 	use("Olical/conjure")
