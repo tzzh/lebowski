@@ -71,6 +71,8 @@ Job
 						},
 					},
 				})
+			else
+				nvim_lsp.pyright.setup({ on_attach = on_attach })
 			end
 		end),
 	})
