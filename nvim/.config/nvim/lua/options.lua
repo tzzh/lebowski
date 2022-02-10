@@ -26,7 +26,7 @@ opt.expandtab = true
 opt.number = true
 opt.cursorline = true
 
-opt.title = true
+--opt.title = true
 
 cmd("colorscheme gruvbox")
 cmd("filetype plugin indent on")
