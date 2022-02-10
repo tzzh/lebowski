@@ -1,4 +1,5 @@
 local nvim_lsp = require("lspconfig")
+local Job = require("plenary.job")
 
 local sumneko_root_path = "/Users/thomas/Projects/lua-language-server/"
 local sumneko_binary = sumneko_root_path .. "/bin/macOS/lua-language-server"
@@ -45,7 +46,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "pyright", "tsserver", "terraformls" }
+local servers = { "terraformls", "html" }
 for _, lsp in ipairs(servers) do
 	nvim_lsp[lsp].setup({
 		on_attach = on_attach,
@@ -55,7 +56,32 @@ for _, lsp in ipairs(servers) do
 	})
 end
 
-require("lspconfig").sumneko_lua.setup({
+Job
+	:new({
+		command = "pipenv",
+		args = { "--venv" },
+		on_exit = vim.schedule_wrap(function(j, return_val)
+			if return_val == 0 then
+				local venv_path = vim.inspect(j:result()[1]):sub(2, -2)
+				nvim_lsp.pyright.setup({
+					on_attach = on_attach,
+					settings = {
+						python = {
+							pythonPath = venv_path .. "/bin/python",
+						},
+					},
+				})
+			end
+		end),
+	})
+	:start()
+
+nvim_lsp.tsserver.setup({
+	on_attach = on_attach,
+	cmd = { "/Users/thomas/.nvm/versions/node/v14.15.4/bin/typescript-language-server", "--stdio" },
+})
+
+nvim_lsp.sumneko_lua.setup({
 	on_attach = on_attach,
 	cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
 	settings = {
