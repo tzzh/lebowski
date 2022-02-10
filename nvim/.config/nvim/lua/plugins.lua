@@ -18,10 +18,20 @@ return require("packer").startup(function(use)
 	use("hrsh7th/nvim-cmp")
 	use("hrsh7th/cmp-nvim-lsp")
 
+	use({
+		"nvim-treesitter/nvim-treesitter",
+		run = ":TSUpdate",
+	})
+
 	use({ "junegunn/fzf", run = ":call fzf#install()" })
 	use("junegunn/fzf.vim")
 
-	use("lewis6991/gitsigns.nvim")
+	use({
+		"lewis6991/gitsigns.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+		},
+	})
 	use("vim-test/vim-test")
 	use("junegunn/vim-peekaboo")
 	use("kassio/neoterm")
@@ -38,6 +48,9 @@ return require("packer").startup(function(use)
 
 	use("hashivim/vim-terraform")
 	use("google/vim-jsonnet")
+
+	use("numToStr/Comment.nvim")
+	use("chr4/nginx.vim")
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
