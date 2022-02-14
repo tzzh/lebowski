@@ -74,3 +74,6 @@ bindkey -s '^g' 'gb\n'
 bindkey -s '^z' 'source ~/.zshrc\n'
 bindkey -s '^n' 'nvim\n'
 eval "$(pyenv init -)"
+
+
+[ -f ~/.fluidlyrc ] && source ~/.fluidlyrc
