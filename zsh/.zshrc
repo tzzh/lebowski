@@ -42,7 +42,7 @@ export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git --co
 export EDITOR="nvim"
 
 source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-eval "$(direnv hook zsh)"
+#eval "$(direnv hook zsh)"
 source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
 source <(kubectl completion zsh)
