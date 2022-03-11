@@ -37,12 +37,18 @@ local on_attach = function(client, bufnr)
 	buf_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 	buf_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 	buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-	buf_set_keymap("n", "<leader>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
+	buf_set_keymap("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 	buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
 	buf_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
 	buf_set_keymap("n", "<leader>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
 	buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+
+    --require "lsp_signature".on_attach()
 end
+
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+local updated_capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
@@ -50,6 +56,7 @@ local servers = { "terraformls", "html", "clojure_lsp", "bashls" }
 for _, lsp in ipairs(servers) do
 	nvim_lsp[lsp].setup({
 		on_attach = on_attach,
+        capabilities = updated_capabilities,
 		flags = {
 			debounce_text_changes = 150,
 		},
@@ -80,11 +87,13 @@ Job
 
 nvim_lsp.tsserver.setup({
 	on_attach = on_attach,
+    capabilities = updated_capabilities,
 	cmd = { "/Users/thomas/.nvm/versions/node/v14.15.4/bin/typescript-language-server", "--stdio" },
 })
 
 nvim_lsp.sumneko_lua.setup({
 	on_attach = on_attach,
+    capabilities = updated_capabilities,
 	cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
 	settings = {
 		Lua = {
@@ -108,4 +117,12 @@ nvim_lsp.sumneko_lua.setup({
 			},
 		},
 	},
+})
+
+local null_ls = require("null-ls")
+null_ls.setup({
+    sources = {
+        null_ls.builtins.diagnostics.mypy,
+        null_ls.builtins.diagnostics.shellcheck
+    },
 })

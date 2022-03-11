@@ -17,6 +17,10 @@ map("n", "<C-n>", ":nohl<CR>", { noremap = true, silent = true }) -- clear highl
 
 map("t", "<Esc>", [[<C-\><C-n>]], { noremap = true }) -- escape terminal mode
 
+
+map("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true }) -- move lines visually
+map("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
+
 local toggle_qf = function()
 	for _, win in pairs(vim.fn.getwininfo()) do
 		if win["quickfix"] == 1 then
@@ -35,5 +39,7 @@ map("n", "<leader>mp", [[:lua require('mypy').run()<CR>]], { noremap = true, sil
 map("n", "<leader>jn", [[:lua require('journal').edit_current_day()<CR>]], { noremap = true, silent = true })
 map("n", "<leader>jl", [[:lua require('journal').edit_last_day()<CR>]], { noremap = true, silent = true })
 map("n", "<Leader>js", ":FZF ~/journal/<CR>", { noremap = true, silent = true })
+
+
 
 return M
