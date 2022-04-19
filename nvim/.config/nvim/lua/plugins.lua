@@ -22,7 +22,7 @@ return require("packer").startup(function(use)
 	use("hrsh7th/cmp-nvim-lua")
 
 	use("onsails/lspkind-nvim")
-    --use("ray-x/lsp_signature.nvim")
+	--use("ray-x/lsp_signature.nvim")
 
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
@@ -65,7 +65,18 @@ return require("packer").startup(function(use)
 	use("numToStr/Comment.nvim")
 	use("chr4/nginx.vim")
 
-    use("kyazdani42/nvim-tree.lua")
+	use("kyazdani42/nvim-tree.lua")
+	-- use {
+	--   "folke/trouble.nvim",
+	--   requires = "kyazdani42/nvim-web-devicons",
+	--   config = function()
+	--     require("trouble").setup {
+	--       -- your configuration comes here
+	--       -- or leave it empty to use the default settings
+	--       -- refer to the configuration section below
+	--     }
+	--   end
+	-- }
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
