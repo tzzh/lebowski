@@ -10,7 +10,13 @@ return require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 	use("nvim-lua/plenary.nvim")
 
-	use("vim-airline/vim-airline")
+	use({
+		"nvim-lualine/lualine.nvim",
+		requires = { "kyazdani42/nvim-web-devicons", opt = true },
+		config = function()
+			require("lualine").setup()
+		end,
+	})
 	use("flazz/vim-colorschemes")
 	use("tpope/vim-surround")
 
@@ -65,7 +71,12 @@ return require("packer").startup(function(use)
 	use("numToStr/Comment.nvim")
 	use("chr4/nginx.vim")
 
-	use("kyazdani42/nvim-tree.lua")
+	use({
+		"kyazdani42/nvim-tree.lua",
+		requires = {
+			"kyazdani42/nvim-web-devicons", -- optional, for file icon
+		},
+	})
 	-- use {
 	--   "folke/trouble.nvim",
 	--   requires = "kyazdani42/nvim-web-devicons",
