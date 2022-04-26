@@ -68,7 +68,11 @@ return require("packer").startup(function(use)
 	use("hashivim/vim-terraform")
 	use("google/vim-jsonnet")
 
-	use("numToStr/Comment.nvim")
+	use({"numToStr/Comment.nvim",
+		config = function()
+			require("Comment").setup()
+		end,
+    })
 	use("chr4/nginx.vim")
 
 	use({
