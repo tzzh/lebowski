@@ -21,6 +21,7 @@ cmp.setup({
 		{ name = "nvim_lsp", priority = 10 },
 		{ name = "path" },
 		{ name = "buffer", priority = 2, keyword_length = 5, max_item_count = 5 },
+		{ name = "conjure" },
 	},
 
 	formatting = {

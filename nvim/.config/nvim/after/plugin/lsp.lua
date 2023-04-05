@@ -46,43 +46,41 @@ local on_attach = function(client, bufnr)
 	--require "lsp_signature".on_attach()
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-local updated_capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- local updated_capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "terraformls", "html", "clojure_lsp", "bashls" }
+local servers = { "terraformls", "html", "clojure_lsp", "bashls", "gopls" }
 for _, lsp in ipairs(servers) do
 	nvim_lsp[lsp].setup({
 		on_attach = on_attach,
-		capabilities = updated_capabilities,
+		-- capabilities = updated_capabilities,
 		flags = {
 			debounce_text_changes = 150,
 		},
 	})
 end
 
-Job
-	:new({
-		command = "pipenv",
-		args = { "--venv" },
-		on_exit = vim.schedule_wrap(function(j, return_val)
-			if return_val == 0 then
-				local venv_path = vim.inspect(j:result()[1]):sub(2, -2)
-				nvim_lsp.pyright.setup({
-					on_attach = on_attach,
-					settings = {
-						python = {
-							pythonPath = venv_path .. "/bin/python",
-						},
+Job:new({
+	command = "pipenv",
+	args = { "--venv" },
+	on_exit = vim.schedule_wrap(function(j, return_val)
+		if return_val == 0 then
+			local venv_path = vim.inspect(j:result()[1]):sub(2, -2)
+			nvim_lsp.pyright.setup({
+				on_attach = on_attach,
+				settings = {
+					python = {
+						pythonPath = venv_path .. "/bin/python",
 					},
-				})
-			else
-				nvim_lsp.pyright.setup({ on_attach = on_attach })
-			end
-		end),
-	})
-	:start()
+				},
+			})
+		else
+			nvim_lsp.pyright.setup({ on_attach = on_attach })
+		end
+	end),
+}):start()
 
 nvim_lsp.tsserver.setup({
 	on_attach = on_attach,
@@ -90,38 +88,38 @@ nvim_lsp.tsserver.setup({
 	cmd = { "/Users/thomas/.nvm/versions/node/v14.15.4/bin/typescript-language-server", "--stdio" },
 })
 
-nvim_lsp.sumneko_lua.setup({
-	on_attach = on_attach,
-	capabilities = updated_capabilities,
-	cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
-	settings = {
-		Lua = {
-			runtime = {
-				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-				version = "LuaJIT",
-				-- Setup your lua path
-				path = runtime_path,
-			},
-			diagnostics = {
-				-- Get the language server to recognize the `vim` global
-				globals = { "vim" },
-			},
-			workspace = {
-				-- Make the server aware of Neovim runtime files
-				library = vim.api.nvim_get_runtime_file("", true),
-			},
-			-- Do not send telemetry data containing a randomized but unique identifier
-			telemetry = {
-				enable = false,
-			},
-		},
-	},
-})
-
-local null_ls = require("null-ls")
-null_ls.setup({
-	sources = {
-		null_ls.builtins.diagnostics.mypy,
-		null_ls.builtins.diagnostics.shellcheck,
-	},
-})
+-- nvim_lsp.sumneko_lua.setup({
+-- 	on_attach = on_attach,
+-- 	capabilities = updated_capabilities,
+-- 	cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
+-- 	settings = {
+-- 		Lua = {
+-- 			runtime = {
+-- 				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+-- 				version = "LuaJIT",
+-- 				-- Setup your lua path
+-- 				path = runtime_path,
+-- 			},
+-- 			diagnostics = {
+-- 				-- Get the language server to recognize the `vim` global
+-- 				globals = { "vim" },
+-- 			},
+-- 			workspace = {
+-- 				-- Make the server aware of Neovim runtime files
+-- 				library = vim.api.nvim_get_runtime_file("", true),
+-- 			},
+-- 			-- Do not send telemetry data containing a randomized but unique identifier
+-- 			telemetry = {
+-- 				enable = false,
+-- 			},
+-- 		},
+-- 	},
+-- })
+--
+-- local null_ls = require("null-ls")
+-- null_ls.setup({
+-- 	sources = {
+-- 		null_ls.builtins.diagnostics.mypy,
+-- 		null_ls.builtins.diagnostics.shellcheck,
+-- 	},
+-- })

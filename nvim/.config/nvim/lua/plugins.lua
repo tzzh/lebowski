@@ -6,15 +6,17 @@ if fn.empty(fn.glob(install_path)) > 0 then
 	packer_bootstrap = true
 end
 
+vim.g.sexp_filetypes = "clojure,scheme,lisp,timl,fennel,janet"
 return require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
+	use("lewis6991/impatient.nvim")
 	use("nvim-lua/plenary.nvim")
-
+	-- use('Olical/aniseed')
 	use({
 		"nvim-lualine/lualine.nvim",
 		requires = { "kyazdani42/nvim-web-devicons", opt = true },
 		config = function()
-			require("lualine").setup()
+			require("lualine").setup(--[[ {options = {globalstatus=true}} ]])
 		end,
 	})
 	use("flazz/vim-colorschemes")
@@ -26,6 +28,7 @@ return require("packer").startup(function(use)
 	use("hrsh7th/cmp-path")
 	use("hrsh7th/cmp-nvim-lsp")
 	use("hrsh7th/cmp-nvim-lua")
+	use("PaterJason/cmp-conjure")
 
 	use("onsails/lspkind-nvim")
 	--use("ray-x/lsp_signature.nvim")
@@ -39,6 +42,19 @@ return require("packer").startup(function(use)
 
 	use({
 		"nvim-treesitter/nvim-treesitter",
+		ensure_installed = {
+			"python",
+			"lua",
+			"vim",
+			"help",
+			"markdown",
+			"terraform",
+			"clojure",
+			"html",
+			"javascript",
+			"typescript",
+		},
+		auto_install = true,
 		run = ":TSUpdate",
 	})
 
@@ -59,7 +75,7 @@ return require("packer").startup(function(use)
 	use("guns/vim-sexp")
 	use("tpope/vim-sexp-mappings-for-regular-people")
 	use("luochen1990/rainbow")
-	use("bakpakin/fennel.vim")
+	use("jaawerth/fennel.vim")
 
 	use("pangloss/vim-javascript")
 	use("maxmellon/vim-jsx-pretty")
@@ -68,11 +84,12 @@ return require("packer").startup(function(use)
 	use("hashivim/vim-terraform")
 	use("google/vim-jsonnet")
 
-	use({"numToStr/Comment.nvim",
+	use({
+		"numToStr/Comment.nvim",
 		config = function()
 			require("Comment").setup()
 		end,
-    })
+	})
 	use("chr4/nginx.vim")
 
 	use({
@@ -81,6 +98,24 @@ return require("packer").startup(function(use)
 			"kyazdani42/nvim-web-devicons", -- optional, for file icon
 		},
 	})
+
+	use({
+		"nvim-telescope/telescope.nvim",
+		requires = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("telescope").setup({
+				defaults = {
+					layout_config = {
+						horizontal = {
+							preview_cutoff = 0,
+						},
+					},
+				},
+			})
+		end,
+	})
+	-- use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+
 	-- use {
 	--   "folke/trouble.nvim",
 	--   requires = "kyazdani42/nvim-web-devicons",
