@@ -1,20 +1,4 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
-end
-vim.opt.rtp:prepend(lazypath)
-
-vim.g.mapleader = " "
-vim.g.sexp_filetypes = "clojure,scheme,lisp,timl,fennel,janet"
-
-require("lazy").setup({
+return {
 	-- use("lewis6991/impatient.nvim")
 	-- use("nvim-lua/plenary.nvim")
 	-- use('Olical/aniseed')
@@ -96,36 +80,7 @@ require("lazy").setup({
 	{
 		"kyazdani42/nvim-tree.lua",
 		dependencies = {
-			"kyazdani42/nvim-web-devicons", -- optional, for file icon
+			"kyazdani42/nvim-web-devicons",
 		},
 	},
-
-	{
-		"nvim-telescope/telescope.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("telescope").setup({
-				defaults = {
-					layout_config = {
-						horizontal = {
-							preview_cutoff = 0,
-						},
-					},
-				},
-			})
-		end,
-	},
-	-- use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-
-	-- use {
-	--   "folke/trouble.nvim",
-	--   requires = "kyazdani42/nvim-web-devicons",
-	--   config = function()
-	--     require("trouble").setup {
-	--       -- your configuration comes here
-	--       -- or leave it empty to use the default settings
-	--       -- refer to the configuration section below
-	--     }
-	--   end
-	-- }
-})
+}
