@@ -1,107 +1,108 @@
-local fn = vim.fn
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-local packer_bootstrap = false
-if fn.empty(fn.glob(install_path)) > 0 then
-	fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
-	packer_bootstrap = true
-end
-
-vim.g.sexp_filetypes = "clojure,scheme,lisp,timl,fennel,janet"
-return require("packer").startup(function(use)
-	use("wbthomason/packer.nvim")
-	use("lewis6991/impatient.nvim")
-	use("nvim-lua/plenary.nvim")
-	-- use('Olical/aniseed')
-	use({
-		"nvim-lualine/lualine.nvim",
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
-		config = function()
-			require("lualine").setup(--[[ {options = {globalstatus=true}} ]])
-		end,
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
 	})
-	use("flazz/vim-colorschemes")
-	use("tpope/vim-surround")
+end
+vim.opt.rtp:prepend(lazypath)
 
-	use("neovim/nvim-lspconfig")
-	use("hrsh7th/nvim-cmp")
-	use("hrsh7th/cmp-buffer")
-	use("hrsh7th/cmp-path")
-	use("hrsh7th/cmp-nvim-lsp")
-	use("hrsh7th/cmp-nvim-lua")
-	use("PaterJason/cmp-conjure")
+vim.g.mapleader = " "
+vim.g.sexp_filetypes = "clojure,scheme,lisp,timl,fennel,janet"
 
-	use("onsails/lspkind-nvim")
+require("lazy").setup({
+	-- use("lewis6991/impatient.nvim")
+	-- use("nvim-lua/plenary.nvim")
+	-- use('Olical/aniseed')
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "kyazdani42/nvim-web-devicons" },
+		config = function()
+			require("lualine").setup()
+		end,
+	},
+	"flazz/vim-colorschemes",
+	"tpope/vim-surround",
+	"neovim/nvim-lspconfig",
+	"hrsh7th/nvim-cmp",
+	"hrsh7th/cmp-buffer",
+	"hrsh7th/cmp-path",
+	"hrsh7th/cmp-nvim-lsp",
+	"hrsh7th/cmp-nvim-lua",
+	"PaterJason/cmp-conjure",
+	"onsails/lspkind-nvim",
 	--use("ray-x/lsp_signature.nvim")
 
-	use({
+	{
 		"jose-elias-alvarez/null-ls.nvim",
-		requires = {
+		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
-	})
+	},
 
-	use({
-		"nvim-treesitter/nvim-treesitter",
-		ensure_installed = {
-			"python",
-			"lua",
-			"vim",
-			"help",
-			"markdown",
-			"terraform",
-			"clojure",
-			"html",
-			"javascript",
-			"typescript",
-		},
-		auto_install = true,
-		run = ":TSUpdate",
-	})
+	-- use({
+	-- 	"nvim-treesitter/nvim-treesitter",
+	-- 	ensure_installed = {
+	-- 		"python",
+	-- 		"lua",
+	-- 		"vim",
+	-- 		"help",
+	-- 		"markdown",
+	-- 		"terraform",
+	-- 		"clojure",
+	-- 		"html",
+	-- 		"javascript",
+	-- 		"typescript",
+	-- 	},
+	-- 	auto_install = true,
+	-- 	run = ":TSUpdate",
+	-- })
 
-	use({ "junegunn/fzf", run = ":call fzf#install()" })
-	use("junegunn/fzf.vim")
+	{ "junegunn/fzf", build = ":call fzf#install()" },
+	"junegunn/fzf.vim",
 
-	use({
+	{
 		"lewis6991/gitsigns.nvim",
-		requires = {
+		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
-	})
-	use("vim-test/vim-test")
-	use("junegunn/vim-peekaboo")
-	use("kassio/neoterm")
+	},
+	-- use("vim-test/vim-test")
+	"junegunn/vim-peekaboo",
+	-- use("kassio/neoterm")
 
-	use("Olical/conjure")
-	use("guns/vim-sexp")
-	use("tpope/vim-sexp-mappings-for-regular-people")
-	use("luochen1990/rainbow")
-	use("jaawerth/fennel.vim")
+	"Olical/conjure",
+	"guns/vim-sexp",
+	"tpope/vim-sexp-mappings-for-regular-people",
+	"luochen1990/rainbow",
+	"jaawerth/fennel.vim",
+	"pangloss/vim-javascript",
+	"maxmellon/vim-jsx-pretty",
+	"leafgarland/typescript-vim",
+	"hashivim/vim-terraform",
 
-	use("pangloss/vim-javascript")
-	use("maxmellon/vim-jsx-pretty")
-	use("leafgarland/typescript-vim")
-
-	use("hashivim/vim-terraform")
-	use("google/vim-jsonnet")
-
-	use({
+	{
 		"numToStr/Comment.nvim",
 		config = function()
 			require("Comment").setup()
 		end,
-	})
-	use("chr4/nginx.vim")
+	},
+	"chr4/nginx.vim",
 
-	use({
+	{
 		"kyazdani42/nvim-tree.lua",
-		requires = {
+		dependencies = {
 			"kyazdani42/nvim-web-devicons", -- optional, for file icon
 		},
-	})
+	},
 
-	use({
+	{
 		"nvim-telescope/telescope.nvim",
-		requires = { "nvim-lua/plenary.nvim" },
+		dependencies = { "nvim-lua/plenary.nvim" },
 		config = function()
 			require("telescope").setup({
 				defaults = {
@@ -113,7 +114,7 @@ return require("packer").startup(function(use)
 				},
 			})
 		end,
-	})
+	},
 	-- use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
 	-- use {
@@ -127,10 +128,4 @@ return require("packer").startup(function(use)
 	--     }
 	--   end
 	-- }
-
-	-- Automatically set up your configuration after cloning packer.nvim
-	-- Put this at the end after all plugins
-	if packer_bootstrap then
-		require("packer").sync()
-	end
-end)
+})
