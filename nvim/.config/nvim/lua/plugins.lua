@@ -27,24 +27,29 @@ return {
 			"nvim-lua/plenary.nvim",
 		},
 	},
+    {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate",
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    },
+},
 
-	-- use({
-	-- 	"nvim-treesitter/nvim-treesitter",
-	-- 	ensure_installed = {
-	-- 		"python",
-	-- 		"lua",
-	-- 		"vim",
-	-- 		"help",
-	-- 		"markdown",
-	-- 		"terraform",
-	-- 		"clojure",
-	-- 		"html",
-	-- 		"javascript",
-	-- 		"typescript",
-	-- 	},
-	-- 	auto_install = true,
-	-- 	run = ":TSUpdate",
-	-- })
+    --	use({
+    --		"nvim-treesitter/nvim-treesitter",
+    --		ensure_installed = {
+    --			"python",
+    --			"lua",
+    --			"vim",
+    --			"help",
+    --			"markdown",
+    --			"terraform",
+    --			"clojure",
+    --			"html",
+    --			"javascript",
+    --			"typescript",
+    --		},
+    --		auto_install = true,
+    --		run = ":TSUpdate",
+    --	})
 
 	{ "junegunn/fzf", build = ":call fzf#install()" },
 	"junegunn/fzf.vim",
