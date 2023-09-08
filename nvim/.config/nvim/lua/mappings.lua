@@ -4,6 +4,9 @@ local M = {}
 map("n", "<space>", "<nop>", { noremap = true })
 map("n", "<tab>", "<C-^>", { noremap = true }) -- alternate file
 
+
+map("n", "<leader>cp", ':let @* = expand("%")<CR>', { noremap = true }) -- copy current path
+
 -- quickfix list navigation
 map("n", "<leader>j", ":cnext<CR>", { noremap = true })
 map("n", "<leader>k", ":cprev<CR>", { noremap = true })
