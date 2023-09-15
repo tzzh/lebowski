@@ -85,7 +85,7 @@ Job:new({
 nvim_lsp.tsserver.setup({
 	on_attach = on_attach,
 	capabilities = updated_capabilities,
-	cmd = { "/Users/thomas/.nvm/versions/node/v14.15.4/bin/typescript-language-server", "--stdio" },
+	cmd = { "/Users/thomas/.nvm/versions/node/v18.17.0/bin/typescript-language-server", "--stdio" },
 })
 
 -- nvim_lsp.sumneko_lua.setup({
