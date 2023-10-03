@@ -53,9 +53,11 @@ end
 -- map buffer local keybindings when the language server attaches
 local servers = { "terraformls", "html", "clojure_lsp", "bashls", "gopls" }
 for _, lsp in ipairs(servers) do
+
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
 	nvim_lsp[lsp].setup({
 		on_attach = on_attach,
-		-- capabilities = updated_capabilities,
+		capabilities = capabilities,
 		flags = {
 			debounce_text_changes = 150,
 		},
@@ -88,6 +90,12 @@ nvim_lsp.tsserver.setup({
 	cmd = { "/Users/thomas/.nvm/versions/node/v18.17.0/bin/typescript-language-server", "--stdio" },
 })
 
+nvim_lsp.jsonls.setup({
+	on_attach = on_attach,
+	capabilities = updated_capabilities,
+	cmd = { "/Users/thomas/.nvm/versions/node/v18.17.0/bin/vscode-json-language-server", "--stdio" },
+})
+
 -- nvim_lsp.sumneko_lua.setup({
 -- 	on_attach = on_attach,
 -- 	capabilities = updated_capabilities,
@@ -113,13 +121,5 @@ nvim_lsp.tsserver.setup({
 -- 				enable = false,
 -- 			},
 -- 		},
--- 	},
--- })
---
--- local null_ls = require("null-ls")
--- null_ls.setup({
--- 	sources = {
--- 		null_ls.builtins.diagnostics.mypy,
--- 		null_ls.builtins.diagnostics.shellcheck,
 -- 	},
 -- })
