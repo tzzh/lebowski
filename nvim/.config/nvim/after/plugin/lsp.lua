@@ -8,6 +8,8 @@ local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
+local nvm_bin_dir = os.getenv("NVM_DIR") .. "/versions/node/v18.17.0/bin/"
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -71,6 +73,7 @@ Job:new({
 		if return_val == 0 then
 			local venv_path = vim.inspect(j:result()[1]):sub(2, -2)
 			nvim_lsp.pyright.setup({
+                cmd = {nvm_bin_dir .. "pyright-langserver", "--stdio" },
 				on_attach = on_attach,
 				settings = {
 					python = {
@@ -87,13 +90,13 @@ Job:new({
 nvim_lsp.tsserver.setup({
 	on_attach = on_attach,
 	capabilities = updated_capabilities,
-	cmd = { "/Users/thomas/.nvm/versions/node/v18.17.0/bin/typescript-language-server", "--stdio" },
+	cmd = { nvm_bin_dir .. "typescript-language-server", "--stdio" },
 })
 
 nvim_lsp.jsonls.setup({
 	on_attach = on_attach,
 	capabilities = updated_capabilities,
-	cmd = { "/Users/thomas/.nvm/versions/node/v18.17.0/bin/vscode-json-language-server", "--stdio" },
+	cmd = { nvm_bin_dir .. "vscode-json-language-server", "--stdio" },
 })
 
 -- nvim_lsp.sumneko_lua.setup({
