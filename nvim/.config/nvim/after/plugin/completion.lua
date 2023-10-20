@@ -22,6 +22,7 @@ cmp.setup({
 		{ name = "path" },
 		{ name = "buffer", priority = 2, keyword_length = 5, max_item_count = 5 },
 		{ name = "conjure" },
+		{ name = "luasnip" },
 	},
 
 	formatting = {
@@ -32,7 +33,7 @@ cmp.setup({
 				nvim_lsp = "[LSP]",
 				nvim_lua = "[Lua]",
 				path = "[Path]",
-				--    luasnip = "[snip]",
+				luasnip = "[snip]",
 			},
 		}),
 	},

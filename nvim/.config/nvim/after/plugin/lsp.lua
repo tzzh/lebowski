@@ -55,8 +55,7 @@ end
 -- map buffer local keybindings when the language server attaches
 local servers = { "terraformls", "html", "clojure_lsp", "bashls", "gopls" }
 for _, lsp in ipairs(servers) do
-
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
+	local capabilities = vim.lsp.protocol.make_client_capabilities()
 	nvim_lsp[lsp].setup({
 		on_attach = on_attach,
 		capabilities = capabilities,
@@ -73,7 +72,7 @@ Job:new({
 		if return_val == 0 then
 			local venv_path = vim.inspect(j:result()[1]):sub(2, -2)
 			nvim_lsp.pyright.setup({
-                cmd = {nvm_bin_dir .. "pyright-langserver", "--stdio" },
+				cmd = { nvm_bin_dir .. "pyright-langserver", "--stdio" },
 				on_attach = on_attach,
 				settings = {
 					python = {
@@ -99,33 +98,33 @@ nvim_lsp.jsonls.setup({
 	cmd = { nvm_bin_dir .. "vscode-json-language-server", "--stdio" },
 })
 
-require'lspconfig'.lua_ls.setup {
-  on_init = function(client)
-    local path = client.workspace_folders[1].name
-    if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
-      client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
-        Lua = {
-          runtime = {
-            -- Tell the language server which version of Lua you're using
-            -- (most likely LuaJIT in the case of Neovim)
-            version = 'LuaJIT'
-          },
-          -- Make the server aware of Neovim runtime files
-          workspace = {
-            checkThirdParty = false,
-            library = {
-              vim.env.VIMRUNTIME
-              -- "${3rd}/luv/library"
-              -- "${3rd}/busted/library",
-            }
-            -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-            -- library = vim.api.nvim_get_runtime_file("", true)
-          }
-        }
-      })
+require("lspconfig").lua_ls.setup({
+	on_init = function(client)
+		local path = client.workspace_folders[1].name
+		if not vim.loop.fs_stat(path .. "/.luarc.json") and not vim.loop.fs_stat(path .. "/.luarc.jsonc") then
+			client.config.settings = vim.tbl_deep_extend("force", client.config.settings, {
+				Lua = {
+					runtime = {
+						-- Tell the language server which version of Lua you're using
+						-- (most likely LuaJIT in the case of Neovim)
+						version = "LuaJIT",
+					},
+					-- Make the server aware of Neovim runtime files
+					workspace = {
+						checkThirdParty = false,
+						library = {
+							vim.env.VIMRUNTIME,
+							-- "${3rd}/luv/library"
+							-- "${3rd}/busted/library",
+						},
+						-- or pull in all of 'runtimepath'. NOTE: this is a lot slower
+						-- library = vim.api.nvim_get_runtime_file("", true)
+					},
+				},
+			})
 
-      client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
-    end
-    return true
-  end
-}
+			client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+		end
+		return true
+	end,
+})

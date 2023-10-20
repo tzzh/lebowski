@@ -17,39 +17,41 @@ return {
 	"hrsh7th/cmp-path",
 	"hrsh7th/cmp-nvim-lsp",
 	"hrsh7th/cmp-nvim-lua",
+
+	{ "saadparwaiz1/cmp_luasnip", dependencies = { "L3MON4D3/LuaSnip" } },
+	-- { "rafamadriz/friendly-snippets" },
 	"PaterJason/cmp-conjure",
 	"onsails/lspkind-nvim",
 	--use("ray-x/lsp_signature.nvim")
+	{
+		"L3MON4D3/LuaSnip",
+	},
 
 	{
-		"jose-elias-alvarez/null-ls.nvim",
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
 		dependencies = {
-			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
 	},
-    {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate",
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-    },
-},
 
-    --	use({
-    --		"nvim-treesitter/nvim-treesitter",
-    --		ensure_installed = {
-    --			"python",
-    --			"lua",
-    --			"vim",
-    --			"help",
-    --			"markdown",
-    --			"terraform",
-    --			"clojure",
-    --			"html",
-    --			"javascript",
-    --			"typescript",
-    --		},
-    --		auto_install = true,
-    --		run = ":TSUpdate",
-    --	})
+	--	use({
+	--		"nvim-treesitter/nvim-treesitter",
+	--		ensure_installed = {
+	--			"python",
+	--			"lua",
+	--			"vim",
+	--			"help",
+	--			"markdown",
+	--			"terraform",
+	--			"clojure",
+	--			"html",
+	--			"javascript",
+	--			"typescript",
+	--		},
+	--		auto_install = true,
+	--		run = ":TSUpdate",
+	--	})
 
 	{ "junegunn/fzf", build = ":call fzf#install()" },
 	"junegunn/fzf.vim",
