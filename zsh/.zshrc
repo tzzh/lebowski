@@ -6,8 +6,8 @@ fi
 
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=50000
+SAVEHIST=50000
 setopt hist_ignore_all_dups
 setopt autocd
 bindkey -v
