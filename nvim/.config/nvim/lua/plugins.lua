@@ -58,10 +58,7 @@ return {
 			"nvim-lua/plenary.nvim",
 		},
 	},
-	-- use("vim-test/vim-test")
 	"junegunn/vim-peekaboo",
-	-- use("kassio/neoterm")
-
 	"Olical/conjure",
 	"guns/vim-sexp",
 	"tpope/vim-sexp-mappings-for-regular-people",
