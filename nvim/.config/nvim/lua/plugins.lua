@@ -8,17 +8,9 @@ return {
 	},
 	"flazz/vim-colorschemes",
 	"tpope/vim-surround",
-	"hrsh7th/nvim-cmp",
-	"hrsh7th/cmp-buffer",
-	"hrsh7th/cmp-path",
-	"hrsh7th/cmp-nvim-lsp",
-	"hrsh7th/cmp-nvim-lua",
-
 	{ "saadparwaiz1/cmp_luasnip", dependencies = { "L3MON4D3/LuaSnip" } },
 	-- { "rafamadriz/friendly-snippets" },
 	-- "PaterJason/cmp-conjure",
-	"onsails/lspkind-nvim",
-	--use("ray-x/lsp_signature.nvim")
 	{
 		"L3MON4D3/LuaSnip",
 	},
