@@ -69,7 +69,7 @@ return {
 	"Olical/conjure",
 	"guns/vim-sexp",
 	"tpope/vim-sexp-mappings-for-regular-people",
-	"luochen1990/rainbow",
+    {"luochen1990/rainbow", lazy=false},
 	"jaawerth/fennel.vim",
 	"pangloss/vim-javascript",
 	"maxmellon/vim-jsx-pretty",

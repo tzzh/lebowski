@@ -1,6 +1,7 @@
 local opt = vim.opt
 local cmd = vim.api.nvim_command
 
+vim.g.rainbow_active = 1
 vim.g.mapleader = " "
 
 --TODO review as some of these date from a very long time ago
