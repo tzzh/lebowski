@@ -1,7 +1,4 @@
 return {
-	-- use("lewis6991/impatient.nvim")
-	-- use("nvim-lua/plenary.nvim")
-	-- use('Olical/aniseed')
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "kyazdani42/nvim-web-devicons" },
@@ -11,7 +8,6 @@ return {
 	},
 	"flazz/vim-colorschemes",
 	"tpope/vim-surround",
-	"neovim/nvim-lspconfig",
 	"hrsh7th/nvim-cmp",
 	"hrsh7th/cmp-buffer",
 	"hrsh7th/cmp-path",
@@ -69,7 +65,7 @@ return {
 	"Olical/conjure",
 	"guns/vim-sexp",
 	"tpope/vim-sexp-mappings-for-regular-people",
-    {"luochen1990/rainbow", lazy=false},
+	{ "luochen1990/rainbow", lazy = false },
 	"jaawerth/fennel.vim",
 	"pangloss/vim-javascript",
 	"maxmellon/vim-jsx-pretty",
