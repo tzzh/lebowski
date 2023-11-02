@@ -6,7 +6,6 @@ return {
 			require("lualine").setup({})
 		end,
 	},
-	"flazz/vim-colorschemes",
 	"tpope/vim-surround",
 	{ "saadparwaiz1/cmp_luasnip", dependencies = { "L3MON4D3/LuaSnip" } },
 	-- { "rafamadriz/friendly-snippets" },
@@ -56,4 +55,5 @@ return {
 			{ "<C-n>", ":NvimTreeToggle<CR>" },
 		},
 	},
+	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
 }
