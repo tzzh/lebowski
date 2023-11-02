@@ -16,7 +16,7 @@ return {
 
 	{ "saadparwaiz1/cmp_luasnip", dependencies = { "L3MON4D3/LuaSnip" } },
 	-- { "rafamadriz/friendly-snippets" },
-	"PaterJason/cmp-conjure",
+	-- "PaterJason/cmp-conjure",
 	"onsails/lspkind-nvim",
 	--use("ray-x/lsp_signature.nvim")
 	{
@@ -31,28 +31,10 @@ return {
 		},
 	},
 
-	--	use({
-	--		"nvim-treesitter/nvim-treesitter",
-	--		ensure_installed = {
-	--			"python",
-	--			"lua",
-	--			"vim",
-	--			"help",
-	--			"markdown",
-	--			"terraform",
-	--			"clojure",
-	--			"html",
-	--			"javascript",
-	--			"typescript",
-	--		},
-	--		auto_install = true,
-	--		run = ":TSUpdate",
-	--	})
-
 	{ "junegunn/fzf", build = ":call fzf#install()" },
 	"junegunn/fzf.vim",
 	"junegunn/vim-peekaboo",
-	"Olical/conjure",
+	-- "Olical/conjure",
 	"guns/vim-sexp",
 	"tpope/vim-sexp-mappings-for-regular-people",
 	{ "luochen1990/rainbow", lazy = false },
