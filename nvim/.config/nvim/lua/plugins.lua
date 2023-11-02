@@ -30,9 +30,6 @@ return {
 	"tpope/vim-sexp-mappings-for-regular-people",
 	{ "luochen1990/rainbow", lazy = false },
 	"jaawerth/fennel.vim",
-	"pangloss/vim-javascript",
-	"maxmellon/vim-jsx-pretty",
-	"leafgarland/typescript-vim",
 	"hashivim/vim-terraform",
 
 	{
