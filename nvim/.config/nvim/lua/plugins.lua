@@ -51,13 +51,6 @@ return {
 
 	{ "junegunn/fzf", build = ":call fzf#install()" },
 	"junegunn/fzf.vim",
-
-	{
-		"lewis6991/gitsigns.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-	},
 	"junegunn/vim-peekaboo",
 	"Olical/conjure",
 	"guns/vim-sexp",
