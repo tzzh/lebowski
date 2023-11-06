@@ -13,15 +13,6 @@ return {
 	{
 		"L3MON4D3/LuaSnip",
 	},
-
-	{
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter-textobjects",
-		},
-	},
-
 	{ "junegunn/fzf", build = ":call fzf#install()" },
 	"junegunn/fzf.vim",
 	"junegunn/vim-peekaboo",
