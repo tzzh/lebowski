@@ -26,7 +26,7 @@ source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
 
 alias nv=nvim
 alias ls=exa
-alias cat=bat
+# alias cat=bat
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
