@@ -54,4 +54,5 @@ return {
 			{ "<leader>xQ", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
 		},
 	},
+	"sindrets/diffview.nvim",
 }

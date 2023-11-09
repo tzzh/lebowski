@@ -1,4 +1,4 @@
-local servers = { "terraformls", "html", "clojure_lsp", "bashls", "tsserver", "jsonls" }
+local servers = { "terraformls", "html", "clojure_lsp", "bashls", "tsserver", "jsonls", "yamlls" }
 
 require("mason").setup()
 require("mason-lspconfig").setup({ ensure_installed = servers })
