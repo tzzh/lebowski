@@ -26,7 +26,7 @@ return {
 					{ name = "path" },
 					{ name = "buffer", priority = 2, keyword_length = 5, max_item_count = 5 },
 					-- { name = "conjure" },
-					{ name = "luasnip" },
+					-- { name = "luasnip" },
 				},
 
 				formatting = {

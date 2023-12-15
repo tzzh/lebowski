@@ -68,6 +68,14 @@ function gb {
   git checkout $(awk '{print $2}' <<<"$target" )
 }
 
+function dkill {
+    docker kill $(docker ps -q)
+}
+
+function pipenv-install-from-codeartifact {
+    CODEARTIFACT_TOKEN=$(get-codeartifact-token) pipenv install --dev
+}
+
 bindkey -s '^p' 'cpr\n'
 bindkey -s '^g' 'gb\n'
 bindkey -s '^z' 'source ~/.zshrc\n'

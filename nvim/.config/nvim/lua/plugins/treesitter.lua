@@ -29,9 +29,9 @@ return {
 				incremental_selection = {
 					enable = true,
 					keymaps = {
-						init_selection = "<C-space>",
-						node_incremental = "<C-space>",
-						scope_incremental = false,
+						init_selection = "<CR>",
+						node_incremental = "<CR>",
+						scope_incremental = "grc",
 						node_decremental = "<bs>",
 					},
 				},
@@ -52,6 +52,8 @@ return {
 							["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
 							-- You can also use captures from other query groups like `locals.scm`
 							["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+							["ab"] = "@block.outer",
+							["ib"] = "@block.inner",
 						},
 						-- You can choose the select mode (default is charwise 'v')
 						--
@@ -75,6 +77,13 @@ return {
 						-- * selection_mode: eg 'v'
 						-- and should return true of false
 						include_surrounding_whitespace = true,
+					},
+					move = {
+						enable = true,
+						goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer" },
+						goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer" },
+						goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer" },
+						goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer" },
 					},
 					swap = {
 						enable = true,

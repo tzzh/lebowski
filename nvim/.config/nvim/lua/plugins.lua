@@ -7,18 +7,18 @@ return {
 		end,
 	},
 	"tpope/vim-surround",
-	{ "saadparwaiz1/cmp_luasnip", dependencies = { "L3MON4D3/LuaSnip" } },
+	-- { "saadparwaiz1/cmp_luasnip", dependencies = { "L3MON4D3/LuaSnip" } },
 	-- { "rafamadriz/friendly-snippets" },
 	-- "PaterJason/cmp-conjure",
-	{
-		"L3MON4D3/LuaSnip",
-	},
+	-- {
+	-- 	"L3MON4D3/LuaSnip",
+	-- },
 	{ "junegunn/fzf", build = ":call fzf#install()" },
 	"junegunn/fzf.vim",
 	"junegunn/vim-peekaboo",
 	-- "Olical/conjure",
-	"guns/vim-sexp",
-	"tpope/vim-sexp-mappings-for-regular-people",
+	-- "guns/vim-sexp",
+	-- "tpope/vim-sexp-mappings-for-regular-people",
 	{ "luochen1990/rainbow", lazy = false },
 	"jaawerth/fennel.vim",
 	"hashivim/vim-terraform",
@@ -55,4 +55,6 @@ return {
 		},
 	},
 	"sindrets/diffview.nvim",
+
+	{ "rose-pine/neovim", name = "rose-pine" },
 }

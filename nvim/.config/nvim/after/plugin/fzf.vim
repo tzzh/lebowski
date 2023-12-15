@@ -6,7 +6,7 @@ function! s:build_quickfix_list(lines)
   cc
 endfunction
 
-let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all --ansi'
+let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all --ansi --keep-right'
 let g:fzf_action = {
   \ 'ctrl-q': function('s:build_quickfix_list'),
   \ 'ctrl-x': 'split',
@@ -16,4 +16,5 @@ let g:fzf_buffers_jump = 1
 nnoremap <Leader>p :Files<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>ma :Maps<CR>
+nnoremap <Leader>gf :GFiles?<CR>
 nnoremap <Leader>ev :FZF ~/.config/nvim/<CR>
