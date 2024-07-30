@@ -1,4 +1,4 @@
-local servers = { "terraformls", "html", "clojure_lsp", "bashls", "tsserver", "jsonls", "yamlls" }
+local servers = { "terraformls", "html", "clojure_lsp", "bashls", "tsserver", "jsonls", "yamlls", "ocamllsp" }
 
 require("mason").setup()
 require("mason-lspconfig").setup({ ensure_installed = servers })
@@ -61,14 +61,36 @@ for _, lsp in ipairs(servers) do
 	})
 end
 
+local venv_path
 Job:new({
 	command = "pipenv",
 	args = { "--venv" },
 	on_exit = vim.schedule_wrap(function(j, return_val)
 		if return_val == 0 then
-			local venv_path = vim.inspect(j:result()[1]):sub(2, -2)
+			venv_path = vim.inspect(j:result()[1]):sub(2, -2)
 			nvim_lsp.pyright.setup({
 				-- cmd = { nvm_bin_dir .. "pyright-langserver", "--stdio" },
+				on_attach = on_attach,
+				settings = {
+					python = {
+						pythonPath = venv_path .. "/bin/python",
+					},
+				},
+			})
+		else
+			nvim_lsp.pyright.setup({ on_attach = on_attach })
+		end
+	end),
+}):start()
+
+
+Job:new({
+	command = "poetry",
+	args = { "env", "info", "--path" },
+	on_exit = vim.schedule_wrap(function(j, return_val)
+		if return_val == 0 then
+			venv_path = j:result()[1]
+			nvim_lsp.pyright.setup({
 				on_attach = on_attach,
 				settings = {
 					python = {
@@ -90,3 +112,24 @@ require("lspconfig").lua_ls.setup({
 		telemetry = { enable = false },
 	} },
 })
+
+local M = {}
+M.list_fixtures = function()
+    Job:new({
+        command = venv_path..'/bin/pytest',
+        args = {'--fixtures', '-v'},
+      on_exit = function(j, return_val)
+		if return_val == 0 then
+            for _, line in ipairs(j:result()) do
+                local pattern = '^([%w_]*) .*%-%- (%S*):(%d*)$'
+                local i, _, fixture, file, linenr = string.find(line, pattern)
+                if i ~= nil then
+                  print(fixture, file, linenr)
+                end
+            end
+        end
+      end,
+    }):sync()
+end
+
+return M

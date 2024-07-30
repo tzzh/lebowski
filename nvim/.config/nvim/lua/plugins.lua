@@ -41,6 +41,7 @@ return {
 		end,
 		keys = {
 			{ "<C-n>", ":NvimTreeToggle<CR>" },
+			{ "<leader>cf", ":NvimTreeFindFileToggle<CR>" },
 		},
 	},
 	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
@@ -53,8 +54,18 @@ return {
 			{ "<leader>xL", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
 			{ "<leader>xQ", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
 		},
+        opts = {}
 	},
 	"sindrets/diffview.nvim",
-
+{
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = function() vim.fn["mkdp#util#install"]() end,
+},
 	{ "rose-pine/neovim", name = "rose-pine" },
+{ 'echasnovski/mini.nvim', version = false, config=function()
+require('mini.surround').setup()
+end
+},
 }

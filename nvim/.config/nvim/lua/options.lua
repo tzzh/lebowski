@@ -3,6 +3,9 @@ local cmd = vim.api.nvim_command
 
 vim.g.mapleader = " "
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 --TODO review as some of these date from a very long time ago
 opt.mouse = "a"
 
