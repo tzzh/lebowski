@@ -1,4 +1,4 @@
-local servers = { "terraformls", "html", "clojure_lsp", "bashls", "tsserver", "jsonls", "yamlls" }
+local servers = { "terraformls", "html", "clojure_lsp", "bashls", "vtsls", "jsonls", "yamlls" }
 
 require("mason").setup()
 require("mason-lspconfig").setup({ ensure_installed = servers })
@@ -83,7 +83,6 @@ Job:new({
 	end),
 }):start()
 
-
 Job:new({
 	command = "poetry",
 	args = { "env", "info", "--path" },
@@ -115,21 +114,21 @@ require("lspconfig").lua_ls.setup({
 
 local M = {}
 M.list_fixtures = function()
-    Job:new({
-        command = venv_path..'/bin/pytest',
-        args = {'--fixtures', '-v'},
-      on_exit = function(j, return_val)
-		if return_val == 0 then
-            for _, line in ipairs(j:result()) do
-                local pattern = '^([%w_]*) .*%-%- (%S*):(%d*)$'
-                local i, _, fixture, file, linenr = string.find(line, pattern)
-                if i ~= nil then
-                  print(fixture, file, linenr)
-                end
-            end
-        end
-      end,
-    }):sync()
+	Job:new({
+		command = venv_path .. "/bin/pytest",
+		args = { "--fixtures", "-v" },
+		on_exit = function(j, return_val)
+			if return_val == 0 then
+				for _, line in ipairs(j:result()) do
+					local pattern = "^([%w_]*) .*%-%- (%S*):(%d*)$"
+					local i, _, fixture, file, linenr = string.find(line, pattern)
+					if i ~= nil then
+						print(fixture, file, linenr)
+					end
+				end
+			end
+		end,
+	}):sync()
 end
 
 return M

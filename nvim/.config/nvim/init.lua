@@ -11,6 +11,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.g.loaded_python3_provider = 0
+
 vim.g.rainbow_active = 0
 vim.g.mapleader = " "
 vim.g.sexp_filetypes = "clojure,scheme,lisp,timl,fennel,janet"
