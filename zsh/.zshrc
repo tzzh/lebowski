@@ -26,7 +26,6 @@ source /opt/homebrew/opt/powerlevel10k/share/powerlevel10k/powerlevel10k.zsh-the
 
 alias nv=nvim
 alias ls="lsd -l"
-# alias cat=bat
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -37,15 +36,6 @@ alias ls="lsd -l"
 export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git --color always'
 export EDITOR="nvim"
 
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
-
-function cpr {
-    if DIR=$(find ~/Projects -maxdepth 1 -mindepth 1 -exec basename {} \;| fzf --height 40% --reverse --border) ;
-    then
-        cd "$HOME/Projects/$DIR" || exit 1
-    fi
-}
 
 function gb {
   local tags branches target
@@ -64,10 +54,6 @@ function gb {
 
 function dkill {
     docker kill $(docker ps -q)
-}
-
-function pipenv-install-from-codeartifact {
-    CODEARTIFACT_TOKEN=$(get-codeartifact-token) pipenv install --dev
 }
 
 bindkey -s '^p' 'cpr\n'
