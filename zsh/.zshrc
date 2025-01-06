@@ -36,6 +36,13 @@ alias ls="lsd -l"
 export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git --color always'
 export EDITOR="nvim"
 
+function cpr {
+    if DIR=$(find ~/Projects -maxdepth 1 -mindepth 1 -exec basename {} \;| fzf --height 40% --reverse --border) ;
+    then
+        cd "$HOME/Projects/$DIR" || exit 1
+    fi
+}
+
 
 function gb {
   local tags branches target
