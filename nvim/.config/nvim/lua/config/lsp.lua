@@ -1,7 +1,15 @@
-local servers = { "terraformls", "html", "clojure_lsp", "bashls", "vtsls", "jsonls", "yamlls" }
+local servers = { "terraformls", "html", "clojure_lsp", "bashls", "vtsls", "jsonls", "yamlls", "sqls" }
 
 require("mason").setup()
-require("mason-lspconfig").setup({ ensure_installed = servers })
+-- require("mason-lspconfig").setup {
+--
+--     ensure_installed = servers,
+--     automatic_enable = {
+--         exclude = {
+--             "basedpyright",
+--         }
+--     }
+-- }
 
 require("neodev").setup({})
 
@@ -61,44 +69,50 @@ for _, lsp in ipairs(servers) do
 	})
 end
 
-local venv_path
-Job:new({
-	command = "pipenv",
-	args = { "--venv" },
-	on_exit = vim.schedule_wrap(function(j, return_val)
-		if return_val == 0 then
-			venv_path = vim.inspect(j:result()[1]):sub(2, -2)
-			nvim_lsp.pyright.setup({
-				-- cmd = { nvm_bin_dir .. "pyright-langserver", "--stdio" },
-				on_attach = on_attach,
-				settings = {
-					python = {
-						pythonPath = venv_path .. "/bin/python",
-					},
-				},
-			})
-		else
-			nvim_lsp.pyright.setup({ on_attach = on_attach })
-		end
-	end),
-}):start()
+local function setup_basedpyright_with_venv(venv_path)
+	nvim_lsp.basedpyright.setup({
+		on_attach = function(client, bufnr)
+			-- Disable semantic highlighting to not mess up highlighting for now
+			client.server_capabilities.semanticTokensProvider = nil
+			if on_attach then
+				on_attach(client, bufnr)
+			end
+		end,
+		settings = {
+			python = {
+				pythonPath = venv_path .. "/bin/python",
+			},
+		},
+	})
+end
 
+
+
+-- Check for Poetry first
 Job:new({
 	command = "poetry",
 	args = { "env", "info", "--path" },
 	on_exit = vim.schedule_wrap(function(j, return_val)
 		if return_val == 0 then
-			venv_path = j:result()[1]
-			nvim_lsp.pyright.setup({
-				on_attach = on_attach,
-				settings = {
-					python = {
-						pythonPath = venv_path .. "/bin/python",
-					},
-				},
-			})
+			-- Poetry found, use its venv
+			local venv_path = j:result()[1]
+			setup_basedpyright_with_venv(venv_path)
 		else
-			nvim_lsp.pyright.setup({ on_attach = on_attach })
+			-- Poetry not found, check for Pipenv
+			Job:new({
+				command = "pipenv",
+				args = { "--venv" },
+				on_exit = vim.schedule_wrap(function(j2, return_val2)
+					if return_val2 == 0 then
+						-- Pipenv found, use its venv
+						local venv_path = vim.inspect(j2:result()[1]):sub(2, -2)
+						setup_basedpyright_with_venv(venv_path)
+					else
+						-- Neither found, use default
+						nvim_lsp.basedpyright.setup({ on_attach = on_attach })
+					end
+				end),
+			}):start()
 		end
 	end),
 }):start()
