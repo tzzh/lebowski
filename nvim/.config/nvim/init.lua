@@ -20,3 +20,4 @@ vim.g.sexp_filetypes = "clojure,scheme,lisp,timl,fennel,janet"
 require("lazy").setup("plugins")
 require("options")
 require("mappings")
+require("config.lsp")

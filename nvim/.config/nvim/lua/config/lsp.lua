@@ -1,92 +1,92 @@
 local servers = { "terraformls", "html", "clojure_lsp", "bashls", "vtsls", "jsonls", "yamlls", "sqls" }
 
 require("mason").setup()
--- require("mason-lspconfig").setup {
---
---     ensure_installed = servers,
---     automatic_enable = {
---         exclude = {
---             "basedpyright",
---         }
---     }
--- }
 
-require("neodev").setup({})
-
-local nvim_lsp = require("lspconfig")
 local Job = require("plenary.job")
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-	local function buf_set_keymap(...)
-		vim.api.nvim_buf_set_keymap(bufnr, ...)
-	end
-	local function buf_set_option(...)
-		vim.api.nvim_buf_set_option(bufnr, ...)
-	end
+-- Set up global LSP keymaps using LspAttach autocommand
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+	callback = function(ev)
+		local bufnr = ev.buf
+		local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
-	-- Enable completion triggered by <c-x><c-o>
-	buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+		-- Enable completion triggered by <c-x><c-o>
+		vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-	-- Mappings.
-	local opts = { noremap = true, silent = true }
+		-- Mappings.
+		local opts = { noremap = true, silent = true, buffer = bufnr }
 
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	buf_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-	buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-	buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-	buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-	buf_set_keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-	buf_set_keymap("n", "<leader>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-	buf_set_keymap("n", "<leader>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-	buf_set_keymap("n", "<leader>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
-	buf_set_keymap("n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-	buf_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-	buf_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-	buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-	buf_set_keymap("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-	buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
-	buf_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
-	buf_set_keymap("n", "<leader>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
-	buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+		-- See `:help vim.lsp.*` for documentation on any of the below functions
+		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+		vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
+		vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts)
+		vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts)
+		vim.keymap.set("n", "<leader>wl", function()
+			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+		end, opts)
+		vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
+		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+		vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+		vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
+		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+		vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+		vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
+		vim.keymap.set("n", "<leader>f", function()
+			vim.lsp.buf.format({ async = true })
+		end, opts)
 
-	--require "lsp_signature".on_attach()
-end
+		-- Disable semantic highlighting for basedpyright
+		if client and client.name == "basedpyright" then
+			client.server_capabilities.semanticTokensProvider = nil
+		end
+	end,
+})
 
+-- Set up global capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
+-- Configure servers (nvim-lspconfig provides the base configs via vim.lsp.config)
+-- We just need to add our custom settings
 for _, lsp in ipairs(servers) do
-	nvim_lsp[lsp].setup({
-		on_attach = on_attach,
-		capabilities = capabilities,
-		flags = {
-			debounce_text_changes = 150,
-		},
-	})
+	if vim.lsp.config[lsp] then
+		vim.lsp.config[lsp] = vim.tbl_deep_extend("force", vim.lsp.config[lsp], {
+			capabilities = capabilities,
+		})
+	end
 end
 
-local function setup_basedpyright_with_venv(venv_path)
-	nvim_lsp.basedpyright.setup({
-		on_attach = function(client, bufnr)
-			-- Disable semantic highlighting to not mess up highlighting for now
-			client.server_capabilities.semanticTokensProvider = nil
-			if on_attach then
-				on_attach(client, bufnr)
-			end
-		end,
+-- Configure lua_ls with specific settings
+if vim.lsp.config.lua_ls then
+	vim.lsp.config.lua_ls = vim.tbl_deep_extend("force", vim.lsp.config.lua_ls, {
+		capabilities = capabilities,
 		settings = {
-			python = {
-				pythonPath = venv_path .. "/bin/python",
+			Lua = {
+				workspace = { checkThirdParty = false },
+				telemetry = { enable = false },
 			},
 		},
 	})
 end
 
-
+-- Configure basedpyright
+local function setup_basedpyright_with_venv(venv_path)
+	if vim.lsp.config.basedpyright then
+		vim.lsp.config.basedpyright = vim.tbl_deep_extend("force", vim.lsp.config.basedpyright, {
+			capabilities = capabilities,
+			settings = {
+				python = {
+					pythonPath = venv_path .. "/bin/python",
+				},
+			},
+		})
+	end
+end
 
 -- Check for Poetry first
 Job:new({
@@ -108,8 +108,12 @@ Job:new({
 						local venv_path = vim.inspect(j2:result()[1]):sub(2, -2)
 						setup_basedpyright_with_venv(venv_path)
 					else
-						-- Neither found, use default
-						nvim_lsp.basedpyright.setup({ on_attach = on_attach })
+						-- Neither found, use default basedpyright config
+						if vim.lsp.config.basedpyright then
+							vim.lsp.config.basedpyright = vim.tbl_deep_extend("force", vim.lsp.config.basedpyright, {
+								capabilities = capabilities,
+							})
+						end
 					end
 				end),
 			}):start()
@@ -117,32 +121,10 @@ Job:new({
 	end),
 }):start()
 
-require("lspconfig").lua_ls.setup({
-	on_attach = on_attach,
-	capabilities = capabilities,
-	settings = { Lua = {
-		workspace = { checkThirdParty = false },
-		telemetry = { enable = false },
-	} },
-})
-
-local M = {}
-M.list_fixtures = function()
-	Job:new({
-		command = venv_path .. "/bin/pytest",
-		args = { "--fixtures", "-v" },
-		on_exit = function(j, return_val)
-			if return_val == 0 then
-				for _, line in ipairs(j:result()) do
-					local pattern = "^([%w_]*) .*%-%- (%S*):(%d*)$"
-					local i, _, fixture, file, linenr = string.find(line, pattern)
-					if i ~= nil then
-						print(fixture, file, linenr)
-					end
-				end
-			end
-		end,
-	}):sync()
+-- Enable all configured LSP servers
+for _, lsp in ipairs(servers) do
+	vim.lsp.enable(lsp)
 end
 
-return M
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("basedpyright")

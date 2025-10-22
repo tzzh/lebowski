@@ -1,11 +1,13 @@
 return {
-	{
-		"neovim/nvim-lspconfig",
-		config = function()
-			require("config.lsp")
-		end,
-	},
+	"neovim/nvim-lspconfig", -- Provides default configs for vim.lsp.config in 0.11+
 	"williamboman/mason.nvim",
-	"williamboman/mason-lspconfig.nvim",
-	"folke/neodev.nvim",
+	{
+		"folke/lazydev.nvim",
+		ft = "lua",
+		opts = {
+			library = {
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+			},
+		},
+	},
 }
