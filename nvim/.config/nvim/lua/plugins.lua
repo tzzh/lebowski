@@ -7,8 +7,6 @@ return {
 		end,
 	},
 	"tpope/vim-surround",
-	{ "junegunn/fzf", build = ":call fzf#install()" },
-	"junegunn/fzf.vim",
 	"junegunn/vim-peekaboo",
 	-- "Olical/conjure",
 	-- "guns/vim-sexp",
@@ -97,9 +95,56 @@ return {
 		"ibhagwan/fzf-lua",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
-			-- calling `setup` is optional for customization
-			require("fzf-lua").setup({})
+			local fzf = require("fzf-lua")
+			fzf.setup({
+				winopts = {
+					preview = {
+						default = "bat",
+					},
+				},
+				fzf_opts = {
+					["--ansi"] = true,
+					["--info"] = "inline-right",
+					["--height"] = "100%",
+					["--layout"] = "reverse",
+					["--keep-right"] = true,
+				},
+				keymap = {
+					builtin = {
+						["<C-d>"] = "preview-page-down",
+						["<C-u>"] = "preview-page-up",
+					},
+					fzf = {
+						["ctrl-q"] = "select-all+accept",
+						["ctrl-a"] = "select-all",
+					},
+				},
+				actions = {
+					files = {
+						["default"] = fzf.actions.file_edit,
+						["ctrl-x"] = fzf.actions.file_split,
+						["ctrl-v"] = fzf.actions.file_vsplit,
+						["ctrl-q"] = fzf.actions.file_sel_to_qf,
+					},
+				},
+			})
 		end,
+		keys = {
+			{ "<leader>p", "<cmd>lua require('fzf-lua').files()<CR>", desc = "Find files" },
+			{ "<leader>b", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "Find buffers" },
+			{ "<leader>ma", "<cmd>lua require('fzf-lua').keymaps()<CR>", desc = "Find keymaps" },
+			{
+				"<leader>g",
+				"<cmd>lua require('fzf-lua').grep_cword()<CR>",
+				desc = "Grep word under cursor",
+			},
+			{ "<leader>gf", "<cmd>lua require('fzf-lua').git_status()<CR>", desc = "Git status files" },
+			{
+				"<leader>ev",
+				"<cmd>lua require('fzf-lua').files({ cwd = '~/.config/nvim/' })<CR>",
+				desc = "Edit vim config",
+			},
+		},
 	},
 
 	{
@@ -119,7 +164,7 @@ return {
 			or "make",
 		event = "VeryLazy",
 		opts = {
-			provider = "copilot",
+			provider = "claude",
 			selection = {
 				hint_display = "none",
 			},
@@ -163,4 +208,26 @@ return {
 			{ "<leader>at", "<cmd>AvanteToggle<CR>", desc = "Toggle Avante" },
 		},
 	},
+{
+  "MagicDuck/grug-far.nvim",
+  opts = { headerMaxWidth = 80 },
+  cmd = { "GrugFar", "GrugFarWithin" },
+  keys = {
+    {
+      "<leader>sr",
+      function()
+        local grug = require("grug-far")
+        local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
+        grug.open({
+          transient = true,
+          prefills = {
+            filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+          },
+        })
+      end,
+      mode = { "n", "x" },
+      desc = "Search and Replace",
+    },
+  },
+}
 }
