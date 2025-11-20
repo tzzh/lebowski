@@ -34,9 +34,4 @@ M.toggle_qf = toggle_qf
 map("n", "<leader>qf", [[:lua require('mappings').toggle_qf()<CR>]], { noremap = true })
 
 map("n", "<leader>mp", [[:lua require('mypy').run()<CR>]], { noremap = true, silent = true })
-
-map("n", "<leader>jn", [[:lua require('journal').edit_current_day()<CR>]], { noremap = true, silent = true })
-map("n", "<leader>jl", [[:lua require('journal').edit_last_day()<CR>]], { noremap = true, silent = true })
-map("n", "<Leader>js", ":FZF ~/journal/<CR>", { noremap = true, silent = true })
-
 return M
