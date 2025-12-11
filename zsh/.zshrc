@@ -15,9 +15,11 @@ bindkey -v
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/thomas/.zshrc'
 
+fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
+#
 
 source /opt/homebrew/opt/powerlevel10k/share/powerlevel10k/powerlevel10k.zsh-theme
 
@@ -25,6 +27,7 @@ source /opt/homebrew/opt/powerlevel10k/share/powerlevel10k/powerlevel10k.zsh-the
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 alias nv=nvim
+alias lv="NVIM_APPNAME=nvim-lazyvim nvim"
 alias ls="lsd -l"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -43,20 +46,21 @@ function cpr {
     fi
 }
 
+alias git-last-branches="git for-each-ref --sort=-committerdate refs/heads/ --format='%(committerdate:short) %(refname:short)' --count=5"
 
 function gb {
   local tags branches target
   branches=$(
-    git --no-pager branch --all \
-      --format="%(if)%(HEAD)%(then)%(else)%(if:equals=HEAD)%(refname:strip=3)%(then)%(else)%1B[0;34;1mbranch%09%1B[m%(refname:short)%(end)%(end)" \
+    git for-each-ref --sort=-committerdate refs/heads/ refs/remotes/ \
+      --format="%(if)%(HEAD)%(then)%(else)%1B[0;34;1mbranch%09%1B[m%(committerdate:short) %(refname:short)%(end)" \
     | sed '/^$/d') || return
   tags=$(
     git --no-pager tag | awk '{print "\x1b[35;1mtag\x1b[m\t" $1}') || return
   target=$(
     (echo "$branches"; echo "$tags") |
-    fzf --height 40% --reverse --border --no-hscroll --no-multi -n 2 \
-        --ansi --preview="git --no-pager log -150 --pretty=format:%s '..{2}'") || return
-  git checkout $(awk '{print $2}' <<<"$target" )
+    fzf --height 40% --reverse --border --no-hscroll --no-multi -n 3 \
+        --ansi --preview="git --no-pager log -150 --pretty=format:%s '..{3}'") || return
+  git checkout $(awk '{print $3}' <<<"$target" )
 }
 
 function dkill {
@@ -74,3 +78,4 @@ source ~/.secrets
 
 eval "$(fnm env --use-on-cd --shell zsh)"
 export PATH="$PATH:/Users/thomas/.local/bin"
+eval "$(mise activate zsh)"
